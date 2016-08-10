@@ -1,5 +1,6 @@
 
 ---------------------------------------------- Копирайт, епта ------------------------------------------------------------------------
+---------------------------------------------- Copyright , epta - -------------------------------------------------- ---------------------
 
 local copyright = [[
 
@@ -10,7 +11,15 @@ local copyright = [[
 
 	Просто помни, что эту ОСь накодил Тимофеев Игорь,
 	ссылка на ВК: vk.com/id7799889
-
+	
+	English: 
+	you could write a bunch of text , saying ,
+	You do not have permission to use this in the garbage
+	commercial purposes , and other nonsense , inspired us
+	Western culture . But I'm not a fag or something, right?
+	
+	Just remember that this axis nakodil Igor Timofeev ,
+	a reference to the VC : vk.com/id7799889
 ]]
 
 -- Вычищаем копирайт из оперативки, ибо мы не можем тратить СТОЛЬКО памяти.
@@ -20,9 +29,19 @@ local copyright = [[
 -- Я передумал, не очищаем, пригодится еще кое-где. Вот же ж костыльная параша!
 -- copyright = nil
 
+--English:
+-- Clean out the copyright of RAM because we can not spend as much memory .
+-- What then , one, two, three ... 282 UTF- 8 characters !
+-- And this is , by the way , 56 times the word " Faggot ." But once - no fag , so clean.
+
+-- I changed my mind , is not cleared , it is useful even in some places . That same rail spike stool !
+-- Copyright = nil
+
 ---------------------------------------------- Библиотеки ------------------------------------------------------------------------
+---------------------------------------------- Libraries ------------------------------------------------------------------------
 
 -- Адаптивная загрузка необходимых библиотек и компонентов
+-- Adaptive load the necessary libraries and components
 local libraries = {
 	component = "component",
 	image = "image",
@@ -39,6 +58,7 @@ local libraries = {
 for library in pairs(libraries) do if not _G[library] then _G[library] = require(libraries[library]) end end; libraries = nil
 
 ---------------------------------------------- Переменные ------------------------------------------------------------------------
+---------------------------------------------- Variables ------------------------------------------------------------------------
 
 local workPath = "MineOS/Desktop/"
 local pathOfDockShortcuts = "MineOS/System/OS/Dock/"
@@ -77,8 +97,10 @@ local sizes = {
 }
 
 ---------------------------------------------- Функции ------------------------------------------------------------------------
+---------------------------------------------- Features -----------------------------------------------------------------------
 
 --Рерасчет всех необходимых параметров
+--Define All necessary parameters
 local function calculateSizes()
 	sizes.xCountOfIcons, sizes.yCountOfIcons, sizes.totalCountOfIcons =  MineOSCore.getParametersForDrawingIcons(buffer.screen.width, buffer.screen.height - sizes.heightOfDock - 6, sizes.xSpaceBetweenIcons, sizes.ySpaceBetweenIcons)
 	sizes.yPosOfIcons = 3
@@ -87,6 +109,7 @@ local function calculateSizes()
 end
 
 --Изменение обоев из файла обоев
+--Grab Wallpapers from wallpaper file
 local function changeWallpaper()
 	wallpaper = nil
 	if fs.exists(pathToWallpaper) then
@@ -98,6 +121,7 @@ local function changeWallpaper()
 end
 
 --Загрузка обоев или статичного фона
+--Partition request or static background wallpaper
 local function drawWallpaper()
 	if wallpaper then
 		buffer.image(1, 1, wallpaper)
@@ -112,6 +136,7 @@ local function getFileList()
 end
 
 --ОТРИСОВКА ИКОНОК НА РАБОЧЕМ СТОЛЕ ПО ТЕКУЩЕЙ ПАПКЕ
+--Draw Icons on the desktop software in the current folder
 local function drawDesktop()
 	obj.DesktopCounters = {}
 
@@ -132,17 +157,21 @@ local function drawDesktop()
 end
 
 -- Отрисовка дока
+-- Drawing dock
 local function drawDock()
 	--Получаем список файлов ярлыком дока
+	--Poluchaem List of files labeled dock
 	local dockShortcuts = ecs.getFileList(pathOfDockShortcuts)
 	currentCountOfIconsInDock = #dockShortcuts
 	obj.DockIcons = {}
 
 	--Рассчитываем размер и позицию дока на основе размера
+	--We expect the size and position of the dock based on size
 	local widthOfDock = (currentCountOfIconsInDock * (sizes.widthOfIcon + sizes.xSpaceBetweenIcons) - sizes.xSpaceBetweenIcons) + sizes.heightOfDock * 2 + 2
 	local xDock, yDock = math.floor(buffer.screen.width / 2 - widthOfDock / 2), buffer.screen.height
 
 	--Рисуем сам док
+	--Own dock
 	local transparency = colors.dockBaseTransparency
 	local currentDockWidth = widthOfDock - 2
 	for i = 1, sizes.heightOfDock do
@@ -157,6 +186,7 @@ local function drawDock()
 	end
 
 	--Рисуем ярлыки на доке
+	--Labels on dock
 	if currentCountOfIconsInDock > 0 then
 		local xIcons = math.floor(buffer.screen.width / 2 - ((sizes.widthOfIcon + sizes.xSpaceBetweenIcons) * currentCountOfIconsInDock - sizes.xSpaceBetweenIcons) / 2 )
 		local yIcons = buffer.screen.height - sizes.heightOfDock - 1
@@ -171,6 +201,7 @@ local function drawDock()
 end
 
 -- Нарисовать информацию справа на топбаре
+-- Draw the right information at top bar
 local function drawTime()
 	local free, total, used = ecs.getInfoAboutRAM()
 	local time = used .. "/".. total .. " KB RAM, " .. unicode.sub(os.date("%T"), 1, -4) .. " "
@@ -178,6 +209,7 @@ local function drawTime()
 end
 
 --РИСОВАТЬ ВЕСЬ ТОПБАР
+-- ALL TOP BAR
 local function drawTopBar()
 	obj.TopBarButtons = GUI.menu(1, 1, buffer.screen.width, _G.OSSettings.interfaceColor or colors.interface, {textColor = 0x000000, text = "MineOS"}, {textColor = 0x444444, text = MineOSCore.localization.viewTab}, {textColor = 0x444444, text = MineOSCore.localization.settings})
 	drawTime()
@@ -197,6 +229,7 @@ local function getFileListAndDrawAll(force)
 end
 
 ---------------------------------------------- Система защиты пекарни ------------------------------------------------------------------------
+---------------------------------------------- Protection system  -----------------------------------------------------------------------
 
 local function drawBiometry(backgroundColor, textColor, text)
 	local width, height = 70, 21
@@ -336,6 +369,7 @@ local function login()
 end
 
 ---------------------------------------------- Система нотификаций ------------------------------------------------------------------------
+---------------------------------------------- The notifications system - -------------------------------------------------- --------------------
 
 local function windows10()
 	if math.random(1, 100) > 25 or _G.OSSettings.showWindows10Upgrade == false then return end
@@ -418,6 +452,7 @@ local function paint(x, y)
 end
 
 ---------------------------------------------- Сама ОС ------------------------------------------------------------------------
+---------------------------------------------- Alone GA - -------------------------------------------------- --------------------
 
 buffer.start()
 changeResolution()
@@ -427,6 +462,7 @@ login()
 windows10()
 
 ---------------------------------------------- Анализ событий ------------------------------------------------------------------------
+---------------------------------------------- Event Analysis ------------------------------------------------------------------------
 
 while true do
 	local eventData = { event.pull() }
